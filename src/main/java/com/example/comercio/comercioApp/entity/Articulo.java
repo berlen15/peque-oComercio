@@ -12,32 +12,25 @@ public class Articulo {
     private Integer idArticulo;
     @Column(name="descripcion")
     private String descripcion;
-    @Column(name="disponible")
-    private String disponible;
     @Column(name="precio")
     private double precio;
+
+    @Column(name="stock")
+    private int stock;
+
     @OneToMany(mappedBy = "articulo")
-    //@JoinColumn(name="ventas", updatable = false)
     private List<Venta> ventas;
 
     public Articulo(int idArticulo, String descripcion,
-                    String disponible, double precio, List<Venta> ventas) {
+                    double precio, List<Venta> ventas, int stock) {
         this.idArticulo = idArticulo;
         this.descripcion = descripcion;
-        this.disponible = disponible;
         this.precio = precio;
         this.ventas = ventas;
+        this.stock = stock;
     }
 
     public Articulo() {}
-
-    public int getCodigoArticulo() {
-        return idArticulo;
-    }
-
-    public void setCodigoArticulo(int idArticulo) {
-        this.idArticulo = idArticulo;
-    }
 
     public String getDescripcion() {
         return descripcion;
@@ -45,14 +38,6 @@ public class Articulo {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public String getDisponible() {
-        return disponible;
-    }
-
-    public void setDisponible(String disponible) {
-        this.disponible = disponible;
     }
 
     public double getPrecio() {
@@ -63,12 +48,20 @@ public class Articulo {
         this.precio = precio;
     }
 
-    public int getIdArticulo() {
+    public Integer getIdArticulo() {
         return idArticulo;
     }
 
-    public void setIdArticulo(int idArticulo) {
+    public void setIdArticulo(Integer idArticulo) {
         this.idArticulo = idArticulo;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
     public List<Venta> getVentas() {

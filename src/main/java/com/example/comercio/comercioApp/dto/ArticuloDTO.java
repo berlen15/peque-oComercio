@@ -1,20 +1,24 @@
 package com.example.comercio.comercioApp.dto;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.io.Serializable;
 import java.util.List;
 
 public class ArticuloDTO implements Serializable {
     private int idArticulo;
     private String descripcion;
-    private String disponible;
     private double precio;
+    @JsonBackReference
     private List<VentaDTO> ventas;
 
-    public int getCodigoArticulo() {
+    private int stock;
+
+    public int getIdArticulo() {
         return idArticulo;
     }
 
-    public void setCodigoArticulo(int idArticulo) {
+    public void setIdArticulo(int idArticulo) {
         this.idArticulo = idArticulo;
     }
 
@@ -26,14 +30,6 @@ public class ArticuloDTO implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public String getDisponible() {
-        return disponible;
-    }
-
-    public void setDisponible(String disponible) {
-        this.disponible = disponible;
-    }
-
     public double getPrecio() {
         return precio;
     }
@@ -42,19 +38,19 @@ public class ArticuloDTO implements Serializable {
         this.precio = precio;
     }
 
-    public int getIdArticulo() {
-        return idArticulo;
-    }
-
-    public void setIdArticulo(int idArticulo) {
-        this.idArticulo = idArticulo;
-    }
-
     public List<VentaDTO> getVentas() {
         return ventas;
     }
 
     public void setVentas(List<VentaDTO> ventas) {
         this.ventas = ventas;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 }

@@ -9,5 +9,4 @@ import java.util.List;
 
 @Repository
 public interface IArticuloRepository extends JpaRepository<Articulo, Integer> {
-    List<Articulo> findByDisponible(String disponible);
 }

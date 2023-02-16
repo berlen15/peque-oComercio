@@ -1,7 +1,6 @@
 package com.example.comercio.comercioApp.entity;
 
-
-import org.hibernate.annotations.Cascade;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.util.Date;
