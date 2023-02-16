@@ -1,9 +1,10 @@
 package com.example.comercio.comercioApp.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="venta")
@@ -13,7 +14,8 @@ public class Venta {
     @Column(name="idventa")
     private Integer idVenta;
     @Column(name="fecha")
-    private Date fecha;
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private LocalDate fecha;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="articulo_id", nullable = false)
@@ -21,7 +23,7 @@ public class Venta {
     @Column(name="cantidad")
     private int cantidad;
 
-    public Venta(Integer idVenta, Date fecha, Articulo articulo, int cantidad) {
+    public Venta(Integer idVenta, LocalDate fecha, Articulo articulo, int cantidad) {
         this.idVenta = idVenta;
         this.fecha = fecha;
         this.articulo = articulo;
@@ -38,11 +40,11 @@ public class Venta {
         this.idVenta = idVenta;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 

@@ -2,12 +2,14 @@ package com.example.comercio.comercioApp.dto;
 
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class VentaDTO implements Serializable {
 
     private Integer idVenta;
-    private Date fecha;
+    private LocalDate fecha;
     private ArticuloDTO articuloVendido;
     private int cantidad;
 
@@ -19,11 +21,11 @@ public class VentaDTO implements Serializable {
         this.idVenta = idVenta;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 

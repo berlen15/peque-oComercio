@@ -6,14 +6,10 @@ import com.example.comercio.comercioApp.service.VentaServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 @Service
 public class VentaServiceImpl implements VentaServiceInterface {
@@ -21,10 +17,12 @@ public class VentaServiceImpl implements VentaServiceInterface {
     private IVentaRepository ventaRepository;
     @Override
     public List<Articulo> masVendidosUltimaSemana() {
+
         Calendar c = Calendar.getInstance();
         Date actual = c.getTime();
         c.add(Calendar.DATE, -7);
         Date anterior = c.getTime();
+
         /*SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String fechaActual = formatter.format(actual);
         String fechaAnterior = formatter.format(anterior);
@@ -32,7 +30,8 @@ public class VentaServiceImpl implements VentaServiceInterface {
         System.out.println(fechaAnterior);*/
 
 
-        return ventaRepository.findAllByFechaBetween(transformarFecha(actual), transformarFecha(anterior));
+        return ventaRepository.findAllByFechaBetween(actual.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
+                anterior.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
     }
 
     private java.sql.Date transformarFecha(Date fecha){
