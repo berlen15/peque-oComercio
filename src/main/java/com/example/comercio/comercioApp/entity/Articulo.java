@@ -1,6 +1,7 @@
 package com.example.comercio.comercioApp.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="articulo")
@@ -15,12 +16,12 @@ public class Articulo {
     private String disponible;
     @Column(name="precio")
     private double precio;
-
-    @Column(name="ventas")
-    private int ventas;
+    @OneToMany(mappedBy = "articulo")
+    //@JoinColumn(name="ventas", updatable = false)
+    private List<Venta> ventas;
 
     public Articulo(int idArticulo, String descripcion,
-                    String disponible, double precio, int ventas) {
+                    String disponible, double precio, List<Venta> ventas) {
         this.idArticulo = idArticulo;
         this.descripcion = descripcion;
         this.disponible = disponible;
@@ -70,11 +71,11 @@ public class Articulo {
         this.idArticulo = idArticulo;
     }
 
-    public int getVentas() {
+    public List<Venta> getVentas() {
         return ventas;
     }
 
-    public void setVentas(int ventas) {
+    public void setVentas(List<Venta> ventas) {
         this.ventas = ventas;
     }
 }

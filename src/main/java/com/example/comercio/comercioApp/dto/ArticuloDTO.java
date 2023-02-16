@@ -1,14 +1,15 @@
 package com.example.comercio.comercioApp.dto;
 
-
 import java.io.Serializable;
+import java.util.List;
 
 public class ArticuloDTO implements Serializable {
     private int idArticulo;
     private String descripcion;
     private String disponible;
     private double precio;
-    private int ventas;
+    private List<VentaDTO> ventas;
+
     public int getCodigoArticulo() {
         return idArticulo;
     }
@@ -49,11 +50,11 @@ public class ArticuloDTO implements Serializable {
         this.idArticulo = idArticulo;
     }
 
-    public int getVentas() {
+    public List<VentaDTO> getVentas() {
         return ventas;
     }
 
-    public void setVentas(int ventas) {
+    public void setVentas(List<VentaDTO> ventas) {
         this.ventas = ventas;
     }
 }

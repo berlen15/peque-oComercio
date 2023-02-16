@@ -5,7 +5,7 @@ import com.example.comercio.comercioApp.entity.Venta;
 
 public class VentaConverter {
 
-    private final ArticuloConverter articuloConverter = new ArticuloConverter();
+    private ArticuloConverter articuloConverter;
     public Venta dto2pojo(VentaDTO ventaDTO){
         Venta venta = new Venta();
 

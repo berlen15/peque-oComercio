@@ -1,6 +1,8 @@
 package com.example.comercio.comercioApp.entity;
 
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -14,9 +16,8 @@ public class Venta {
     @Column(name="fecha")
     private Date fecha;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
-    @JoinColumn(name = "articulo_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="articulo_id", nullable = false)
     private Articulo articulo;
     @Column(name="cantidad")
     private int cantidad;
