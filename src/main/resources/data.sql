@@ -1,19 +1,20 @@
 create table articulo (
-    idarticulo int PRIMARY KEY,
+    idarticulo int AUTO_INCREMENT PRIMARY KEY,
     descripcion varchar(200),
     stock int,
+    referencia varchar unique,
     precio double NOT NULL
 );
 
 create table usuario (
-    id int PRIMARY KEY,
-    nombreusuario varchar,
+    id int AUTO_INCREMENT  PRIMARY KEY,
+    username varchar,
     email varchar,
     nombre varchar
 );
 
 create table cesta (
-    idcesta int PRIMARY KEY,
+    idcesta int AUTO_INCREMENT PRIMARY KEY,
     usuario_id int,
     FOREIGN KEY (usuario_id) REFERENCES usuario(id)
 );
@@ -33,39 +34,42 @@ create table articulo_usuario(
 );
 
 create table venta(
-    idventa int PRIMARY KEY,
-    fecha timestamp,
+    idventa int AUTO_INCREMENT PRIMARY KEY,
+    fecha date,
     articulo_id int,
-    cantidad int,
+    importe double,
+    tarjeta_bancaria varchar,
+    usuario_id int,
+    FOREIGN KEY (usuario_id) REFERENCES usuario(id),
     FOREIGN KEY (articulo_id) REFERENCES articulo(idarticulo)
 );
 
-insert into articulo (idarticulo, descripcion, stock, precio)values(1000,'Ratón ergonomico', 10, 15.3);
-insert into articulo (idarticulo, descripcion, stock, precio)values(1001,'Plancha para el pelo portátil, ideal para viajes', 3, 45.3);
-insert into articulo (idarticulo, descripcion, stock, precio)values(1002, 'Herramientas de teclado para PC sobremesa con luces led', 0, 25.4);
-insert into articulo (idarticulo, descripcion, stock, precio)values(1003,'Mochila para portátil con cargador USB incluído', 9, 45.2);
-insert into articulo (idarticulo, descripcion, stock, precio)values(1004,'Ratón especial para el descanso de las muñecas', 15,60.3);
 
 
-insert into usuario (id, nombreusuario, email, nombre)values(1,'belen_1', 'belen@prueba.com', 'Belén');
-insert into usuario (id, nombreusuario, email, nombre)values(2,'salvador_2', 'salvador@prueba2.com', 'Salvador');
+insert into articulo (idarticulo, descripcion, stock, precio, referencia)values(1000,'Ratón ergonomico', 10, 15.3, 'REF1');
+insert into articulo (idarticulo, descripcion, stock, precio, referencia)values(1001,'Plancha para el pelo portátil, ideal para viajes', 3, 45.3, 'REF2');
+insert into articulo (idarticulo, descripcion, stock, precio, referencia)values(1002, 'Herramientas de teclado para PC sobremesa con luces led', 0, 25.4, 'REF3');
+insert into articulo (idarticulo, descripcion, stock, precio, referencia)values(1003,'Mochila para portátil con cargador USB incluído', 9, 45.2, 'REF4');
+insert into articulo (idarticulo, descripcion, stock, precio, referencia)values(1004,'Ratón especial para el descanso de las muñecas', 15,60.3, 'REF5');
 
-insert into cesta (idcesta, usuario_id)values(1,1);
+
+insert into usuario (id, username, email, nombre)values(1,'belen', 'belen@prueba.com', 'Belén');
+insert into usuario (id, username, email, nombre)values(2,'salvador', 'salvador@prueba2.com', 'Salvador');
+
 insert into cesta (idcesta, usuario_id)values(2,2);
 
-insert into cesta_articulo (cesta_id, articulo_id)values(1,1000);
-insert into cesta_articulo (cesta_id, articulo_id)values(1,1001);
 insert into cesta_articulo (cesta_id, articulo_id)values(2,1002);
 insert into cesta_articulo (cesta_id, articulo_id)values(2,1003);
 
 insert into articulo_usuario (articulo_id, usuario_id)values(1000,1);
 insert into articulo_usuario (articulo_id, usuario_id)values(1001,2);
 
-insert into venta(idventa, articulo_id, fecha, cantidad)values(1, 1001,'2023-01-09 00:00:00', 2);
-insert into venta(idventa, articulo_id, fecha, cantidad)values(2, 1001,'2023-01-02 00:00:00', 5);
-insert into venta(idventa, articulo_id, fecha, cantidad)values(3, 1000,'2023-01-03 00:00:00', 1);
-insert into venta(idventa, articulo_id, fecha, cantidad)values(4, 1000,'2023-01-07 00:00:00', 1);
-insert into venta(idventa, articulo_id, fecha, cantidad)values(5, 1000,'2023-02-16 00:00:00', 1);
-insert into venta(idventa, articulo_id, fecha, cantidad)values(6, 1002,'2023-02-15 00:00:00', 1);
-insert into venta(idventa, articulo_id, fecha, cantidad)values(7, 1002,'2023-02-15 00:00:00', 1);
-insert into venta(idventa, articulo_id, fecha, cantidad)values(8, 1002,'2023-01-31 00:00:00', 1);
+insert into venta(idventa, articulo_id, fecha, importe, usuario_id, tarjeta_bancaria)values(1, 1001,'2023-01-09',45.3,1,'TARJETA1');
+insert into venta(idventa, articulo_id, fecha, importe, usuario_id, tarjeta_bancaria)values(2, 1001,'2023-01-02',45.3,2,'TARJETA2');
+insert into venta(idventa, articulo_id, fecha, importe, usuario_id, tarjeta_bancaria)values(3, 1000,'2023-01-03',15.3,1,'TARJETA1');
+insert into venta(idventa, articulo_id, fecha, importe, usuario_id, tarjeta_bancaria)values(4, 1000,'2023-02-04',15.3,2,'TARJETA2');
+insert into venta(idventa, articulo_id, fecha, importe, usuario_id, tarjeta_bancaria)values(6, 1002,'2023-02-10',25.4,2,'TARJETA2');
+insert into venta(idventa, articulo_id, fecha, importe, usuario_id, tarjeta_bancaria)values(7, 1002,'2023-02-11',25.4,1,'TARJETA1');
+insert into venta(idventa, articulo_id, fecha, importe, usuario_id, tarjeta_bancaria)values(5, 1000,'2023-02-06',15.3,1,'TARJETA1');
+insert into venta(idventa, articulo_id, fecha, importe, usuario_id, tarjeta_bancaria)values(8, 1002,'2023-02-17',25.4,2,'TARJETA2');
+

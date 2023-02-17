@@ -9,12 +9,12 @@ import java.util.List;
 @Table(name="usuario")
 public class Usuario {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name="id")
     private Integer id;
 
-    @Column(name="nombreusuario", unique = true, nullable = false)
-    private String nombreUsuario;
+    @Column(name="username", unique = true)
+    private String username;
 
     @Column(name="email")
     private String email;
@@ -30,9 +30,9 @@ public class Usuario {
     )
     private List<Articulo> articulosComprados;
 
-    public Usuario(Integer id, String nombreUsuario, String email, String nombre) {
+    public Usuario(Integer id, String username, String email, String nombre) {
         this.id = id;
-        this.nombreUsuario = nombreUsuario;
+        this.username = username;
         this.email = email;
         this.nombre = nombre;
         this.articulosComprados = new ArrayList<>();
@@ -64,16 +64,16 @@ public class Usuario {
         this.nombre = nombre;
     }
 
-    public Usuario(String nombreUsuario){
-        this.nombreUsuario=nombreUsuario;
+    public Usuario(String username){
+        this.username = username;
     }
 
-    public String getNombreUsuario() {
-        return nombreUsuario;
+    public String getUsername() {
+        return username;
     }
 
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public List<Articulo> getArticulosComprados() {

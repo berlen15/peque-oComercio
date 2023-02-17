@@ -1,6 +1,8 @@
 package com.example.comercio.comercioApp.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,16 +12,17 @@ import java.util.List;
 public class Cesta {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name="idcesta")
     private Integer idcesta;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Articulo.class)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name = "cesta_articulo",
             joinColumns = @JoinColumn(name="cesta_id", nullable = false),
             inverseJoinColumns =  @JoinColumn(name="articulo_id")
     )
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<Articulo> listadoArticulos;
 
     @OneToOne(fetch = FetchType.LAZY)

@@ -9,4 +9,5 @@ import java.util.List;
 
 @Repository
 public interface IArticuloRepository extends JpaRepository<Articulo, Integer> {
+    Articulo findByReferencia (String referencia);
 }

@@ -1,5 +1,7 @@
 package com.example.comercio.comercioApp.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -7,7 +9,7 @@ import java.util.List;
 @Table(name="articulo")
 public class Articulo {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name="idarticulo")
     private Integer idArticulo;
     @Column(name="descripcion")
@@ -19,15 +21,20 @@ public class Articulo {
     private int stock;
 
     @OneToMany(mappedBy = "articulo")
+    @JsonBackReference
     private List<Venta> ventas;
 
+    @Column(name = "referencia")
+    private String referencia;
+
     public Articulo(int idArticulo, String descripcion,
-                    double precio, List<Venta> ventas, int stock) {
+                    double precio, List<Venta> ventas, int stock, String referencia) {
         this.idArticulo = idArticulo;
         this.descripcion = descripcion;
         this.precio = precio;
         this.ventas = ventas;
         this.stock = stock;
+        this.referencia = referencia;
     }
 
     public Articulo() {}
@@ -70,5 +77,13 @@ public class Articulo {
 
     public void setVentas(List<Venta> ventas) {
         this.ventas = ventas;
+    }
+
+    public String getReferencia() {
+        return referencia;
+    }
+
+    public void setReferencia(String referencia) {
+        this.referencia = referencia;
     }
 }

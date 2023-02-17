@@ -1,16 +1,16 @@
 package com.example.comercio.comercioApp.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name="venta")
 public class Venta {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name="idventa")
     private Integer idVenta;
     @Column(name="fecha")
@@ -19,15 +19,27 @@ public class Venta {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="articulo_id", nullable = false)
+    @JsonBackReference
     private Articulo articulo;
-    @Column(name="cantidad")
-    private int cantidad;
 
-    public Venta(Integer idVenta, LocalDate fecha, Articulo articulo, int cantidad) {
+    @Column(name="importe")
+    private double importe;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
+
+    @Column(name="tarjeta_bancaria")
+    private String numTarjeta;
+
+    public Venta(Integer idVenta, LocalDate fecha, Articulo articulo, double importe, Usuario usuario, String numTarjeta) {
         this.idVenta = idVenta;
         this.fecha = fecha;
         this.articulo = articulo;
-        this.cantidad = cantidad;
+        this.importe = importe;
+        this.usuario = usuario;
+        this.numTarjeta = numTarjeta;
     }
 
     public Venta(){}
@@ -48,20 +60,36 @@ public class Venta {
         this.fecha = fecha;
     }
 
-    public Articulo getArticuloVendido() {
+    public Articulo getArticulo() {
         return articulo;
     }
 
-    public void setArticuloVendido(Articulo articuloVendido) {
-        this.articulo = articuloVendido;
+    public void setArticulo(Articulo articulo) {
+        this.articulo = articulo;
     }
 
-    public int getCantidad() {
-        return cantidad;
+    public double getImporte() {
+        return importe;
     }
 
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
+    public void setImporte(double importe) {
+        this.importe = importe;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getNumTarjeta() {
+        return numTarjeta;
+    }
+
+    public void setNumTarjeta(String numTarjeta) {
+        this.numTarjeta = numTarjeta;
     }
 }
 

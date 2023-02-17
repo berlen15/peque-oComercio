@@ -14,6 +14,8 @@ public class ArticuloDTO implements Serializable {
 
     private int stock;
 
+    private String referencia;
+
     public int getIdArticulo() {
         return idArticulo;
     }
@@ -52,5 +54,13 @@ public class ArticuloDTO implements Serializable {
 
     public void setStock(int stock) {
         this.stock = stock;
+    }
+
+    public String getReferencia() {
+        return referencia;
+    }
+
+    public void setReferencia(String referencia) {
+        this.referencia = referencia;
     }
 }

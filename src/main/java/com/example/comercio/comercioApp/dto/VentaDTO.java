@@ -1,17 +1,23 @@
 package com.example.comercio.comercioApp.dto;
 
 
+import com.example.comercio.comercioApp.entity.Articulo;
+import com.example.comercio.comercioApp.entity.Usuario;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 public class VentaDTO implements Serializable {
-
     private Integer idVenta;
     private LocalDate fecha;
-    private ArticuloDTO articuloVendido;
-    private int cantidad;
+
+    private Articulo articulo;
+
+    private double importe;
+    private Usuario usuario;
+
+    private String numTarjeta;
 
     public Integer getIdVenta() {
         return idVenta;
@@ -29,20 +35,36 @@ public class VentaDTO implements Serializable {
         this.fecha = fecha;
     }
 
-    public ArticuloDTO getArticuloVendido() {
-        return articuloVendido;
+    public Articulo getArticulo() {
+        return articulo;
     }
 
-    public void setArticuloVendido(ArticuloDTO articuloVendido) {
-        this.articuloVendido = articuloVendido;
+    public void setArticulo(Articulo articulo) {
+        this.articulo = articulo;
     }
 
-    public int getCantidad() {
-        return cantidad;
+    public double getImporte() {
+        return importe;
     }
 
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
+    public void setImporte(double importe) {
+        this.importe = importe;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getNumTarjeta() {
+        return numTarjeta;
+    }
+
+    public void setNumTarjeta(String numTarjeta) {
+        this.numTarjeta = numTarjeta;
     }
 }
 

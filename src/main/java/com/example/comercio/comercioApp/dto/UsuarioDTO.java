@@ -6,7 +6,7 @@ import java.util.List;
 
 public class UsuarioDTO implements Serializable {
     private Integer id;
-    private String nombreUsuario;
+    private String username;
     private String email;
     private String nombre;
     private List<ArticuloDTO> articulosComprados;
@@ -35,12 +35,12 @@ public class UsuarioDTO implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getNombreUsuario() {
-        return nombreUsuario;
+    public String getUsername() {
+        return username;
     }
 
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public List<ArticuloDTO> getArticulosComprados() {

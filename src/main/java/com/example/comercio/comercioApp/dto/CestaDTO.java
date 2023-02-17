@@ -1,6 +1,5 @@
 package com.example.comercio.comercioApp.dto;
 
-
 import java.io.Serializable;
 import java.util.List;
 

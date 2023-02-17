@@ -1,9 +1,11 @@
 package com.example.comercio.comercioApp.service;
 
-import com.example.comercio.comercioApp.entity.Articulo;
+import com.example.comercio.comercioApp.dto.ArticuloDTO;
 
 import java.util.List;
 
 public interface ArticuloServiceInterface {
-    public List<Articulo> obtenerDisponibles();
+    public List<ArticuloDTO> obtenerDisponibles();
+
+    public ArticuloDTO obtenerArticulo(String referencia);
 }
