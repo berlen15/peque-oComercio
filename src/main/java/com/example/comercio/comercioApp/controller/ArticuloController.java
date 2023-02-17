@@ -27,7 +27,7 @@ public class ArticuloController {
     }
 
     @GetMapping("/articulos/topVentas")
-    public Set<ArticuloDTO> articulosMasVendidos(){
+    public List<ArticuloDTO> articulosMasVendidos(){
        return this.ventaService.masVendidosUltimaSemana();
     }
 }

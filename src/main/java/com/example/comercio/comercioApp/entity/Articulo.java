@@ -27,7 +27,7 @@ public class Articulo {
     @Column(name = "referencia")
     private String referencia;
 
-    public Articulo(int idArticulo, String descripcion,
+    public Articulo(Integer idArticulo, String descripcion,
                     double precio, List<Venta> ventas, int stock, String referencia) {
         this.idArticulo = idArticulo;
         this.descripcion = descripcion;
@@ -86,4 +86,5 @@ public class Articulo {
     public void setReferencia(String referencia) {
         this.referencia = referencia;
     }
+
 }
