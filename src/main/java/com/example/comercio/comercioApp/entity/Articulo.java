@@ -3,6 +3,7 @@ package com.example.comercio.comercioApp.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -31,14 +32,14 @@ public class Articulo {
     private List<Usuario> usuariosCompradores;
 
     public Articulo(Integer idArticulo, String descripcion,
-                    double precio, List<Venta> ventas, int stock, String referencia, List<Usuario> usuariosCompradores) {
+                    double precio, List<Venta> ventas, int stock, String referencia) {
         this.idArticulo = idArticulo;
         this.descripcion = descripcion;
         this.precio = precio;
         this.ventas = ventas;
         this.stock = stock;
         this.referencia = referencia;
-        this.usuariosCompradores = usuariosCompradores;
+        this.usuariosCompradores = new ArrayList<>();
     }
 
     public Articulo() {}

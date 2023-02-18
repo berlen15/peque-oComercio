@@ -70,11 +70,10 @@ public class CestaServiceImpl implements CestaServiceInterface {
         Usuario usuario = usuarioRepository.findByUsername(nombreUsuario);
         Cesta cesta = cestaRepository.findByUsuario(usuario);
 
-        if(cesta.getListadoArticulos().size() <= 0){
+        if(cesta == null ){
             return false;
         } else {
-            int stockActual = 0;
-
+            if(cesta.getListadoArticulos().size() > 0) return false;
             cesta.getListadoArticulos().stream().forEach((Articulo articulo)->{
                 usuario.getArticulosComprados().add(articulo);
 

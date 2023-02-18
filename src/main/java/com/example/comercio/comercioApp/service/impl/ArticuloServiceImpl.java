@@ -20,14 +20,18 @@ public class ArticuloServiceImpl implements ArticuloServiceInterface {
     @Override
     public List<ArticuloDTO> obtenerDisponibles() {
         List<ArticuloDTO> articulos = new ArrayList<>();
-        articuloRepository.findAll().stream().forEach((final Articulo articulo) -> {
-            if(articulo.getStock()>0) articulos.add(modelMapper.map(articulo, ArticuloDTO.class));
-        });
+        List<Articulo> articulosEntity = articuloRepository.findByStockGreaterThan(0);
+        if(articulosEntity != null){
+            articuloRepository.findByStockGreaterThan(0).stream().forEach((final Articulo articulo) -> {
+                articulos.add(modelMapper.map(articulo, ArticuloDTO.class));
+            });
+        }
         return articulos;
     }
 
     @Override
     public ArticuloDTO obtenerArticulo(String referencia) {
-        return modelMapper.map(articuloRepository.findByReferencia(referencia), ArticuloDTO.class);
+        return articuloRepository.findByReferencia(referencia) != null ?
+                modelMapper.map(articuloRepository.findByReferencia(referencia), ArticuloDTO.class) : null;
     }
 }
