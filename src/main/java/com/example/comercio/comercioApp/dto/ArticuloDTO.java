@@ -16,6 +16,9 @@ public class ArticuloDTO implements Serializable {
 
     private String referencia;
 
+    @JsonBackReference
+    private List<UsuarioDTO> usuariosCompradores;
+
     public int getIdArticulo() {
         return idArticulo;
     }
@@ -62,5 +65,13 @@ public class ArticuloDTO implements Serializable {
 
     public void setReferencia(String referencia) {
         this.referencia = referencia;
+    }
+
+    public List<UsuarioDTO> getUsuariosCompradores() {
+        return usuariosCompradores;
+    }
+
+    public void setUsuariosCompradores(List<UsuarioDTO> usuariosCompradores) {
+        this.usuariosCompradores = usuariosCompradores;
     }
 }

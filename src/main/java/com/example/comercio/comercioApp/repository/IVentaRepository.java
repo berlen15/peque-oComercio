@@ -11,4 +11,5 @@ import java.util.List;
 public interface IVentaRepository extends JpaRepository<Venta, Integer> {
     //List<Venta> findByFechaGreaterThan(LocalDate ultima);
     List<Venta> findByFechaGreaterThan(LocalDate ultima);
+
 }

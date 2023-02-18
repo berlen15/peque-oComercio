@@ -34,7 +34,7 @@ create table articulo_usuario(
 );
 
 create table venta(
-    idventa int PRIMARY KEY,
+    idventa int AUTO_INCREMENT  PRIMARY KEY,
     fecha date,
     articulo_id int,
     importe double,
@@ -56,16 +56,16 @@ insert into articulo (idarticulo, descripcion, stock, precio, referencia)values(
 insert into usuario (id, username, email, nombre)values(1,'belen', 'belen@prueba.com', 'Belén');
 insert into usuario (id, username, email, nombre)values(2,'salvador', 'salvador@prueba2.com', 'Salvador');
 
-insert into cesta (idcesta, usuario_id)values(2,2);
+insert into cesta (usuario_id)values(2);
 
-insert into cesta_articulo (cesta_id, articulo_id)values(2,1002);
-insert into cesta_articulo (cesta_id, articulo_id)values(2,1003);
+--insert into cesta_articulo (cesta_id, articulo_id)values(2,1002);
+--insert into cesta_articulo (cesta_id, articulo_id)values(2,1003);
 
-insert into articulo_usuario (articulo_id, usuario_id)values(1000,1);
-insert into articulo_usuario (articulo_id, usuario_id)values(1001,2);
+--insert into articulo_usuario (articulo_id, usuario_id)values(1000,1);
+--insert into articulo_usuario (articulo_id, usuario_id)values(1001,2);
 
 --insert into venta(idventa, articulo_id, fecha, importe, usuario_id, tarjeta_bancaria)values(1,1001,'2023-01-09',45.3,1,'TARJETA1');
 --insert into venta(idventa, articulo_id, fecha, importe, usuario_id, tarjeta_bancaria)values(2,1002,'2023-01-03',15.3,1,'TARJETA1');
-insert into venta(idventa, articulo_id, fecha, importe, usuario_id, tarjeta_bancaria)values(3,1000,'2023-02-11',15.3,1,'TARJETA2');
-insert into venta(idventa, articulo_id, fecha, importe, usuario_id, tarjeta_bancaria)values(4,1003,'2023-02-17',45.2,2,'TARJETA1');
+insert into venta(articulo_id, fecha, importe, usuario_id, tarjeta_bancaria)values(1000,'2023-02-11',15.3,1,'TARJETA2');
+insert into venta(articulo_id, fecha, importe, usuario_id, tarjeta_bancaria)values(1003,'2023-02-17',45.2,2,'TARJETA1');
 

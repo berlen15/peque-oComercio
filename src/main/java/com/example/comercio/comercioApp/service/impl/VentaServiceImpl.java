@@ -33,9 +33,7 @@ public class VentaServiceImpl implements VentaServiceInterface {
 
     private List<ArticuloDTO> pojo2dto(List<Articulo> articulos){
         List<ArticuloDTO> articulosDTO = new ArrayList<>();
-        //List<VentaDTO> ventasDTO = new ArrayList<>();
         articulos.stream().forEach((Articulo articulo)->{
-            //ventasDTO.add(modelMapper.map(articulo.getVentas(), VentaDTO.class));
             articulosDTO.add(modelMapper.map(articulo, ArticuloDTO.class));
         });
         return articulosDTO;

@@ -42,6 +42,18 @@ public class CestaController {
         }else{
             return new ResponseEntity("El articulo no se ha añadido correctamente. Por favor, inténtelo de nuevo más tarde", HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @PostMapping("/cesta/realizarCompra")
+    public ResponseEntity realizarCompra(@RequestParam String nombreUsuario, @RequestBody String numTarjeta){
+        if(numTarjeta == null || numTarjeta.isEmpty())
+          return new ResponseEntity("Debe introducir una tarjeta válida para realizar el pago",HttpStatus.BAD_REQUEST);
+
+        if(cestaService.realizarCompra(nombreUsuario, numTarjeta)){
+            return new ResponseEntity("El pago se ha realizado correctamente",HttpStatus.OK);
+        } else {
+            return new ResponseEntity("No existen artículos en su cesta para comprar",HttpStatus.BAD_REQUEST);
+        }
 
     }
 }

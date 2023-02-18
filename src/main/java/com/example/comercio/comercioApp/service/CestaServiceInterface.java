@@ -8,5 +8,5 @@ import java.util.List;
 public interface CestaServiceInterface {
     public boolean añadirArticulo(String nombreUsuario, String referencia);
     public CestaDTO verCesta (String  nombreUsuario);
-    public void realizarCompra(String nombreUsuario, List<ArticuloDTO> articulosDTO);
+    public boolean realizarCompra(String nombreUsuario, String numTarjeta);
 }

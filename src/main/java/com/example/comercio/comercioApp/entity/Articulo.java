@@ -27,14 +27,18 @@ public class Articulo {
     @Column(name = "referencia")
     private String referencia;
 
+    @ManyToMany(mappedBy =  "articulosComprados")
+    private List<Usuario> usuariosCompradores;
+
     public Articulo(Integer idArticulo, String descripcion,
-                    double precio, List<Venta> ventas, int stock, String referencia) {
+                    double precio, List<Venta> ventas, int stock, String referencia, List<Usuario> usuariosCompradores) {
         this.idArticulo = idArticulo;
         this.descripcion = descripcion;
         this.precio = precio;
         this.ventas = ventas;
         this.stock = stock;
         this.referencia = referencia;
+        this.usuariosCompradores = usuariosCompradores;
     }
 
     public Articulo() {}
@@ -87,4 +91,11 @@ public class Articulo {
         this.referencia = referencia;
     }
 
+    public List<Usuario> getUsuariosCompradores() {
+        return usuariosCompradores;
+    }
+
+    public void setUsuariosCompradores(List<Usuario> usuariosCompradores) {
+        this.usuariosCompradores = usuariosCompradores;
+    }
 }

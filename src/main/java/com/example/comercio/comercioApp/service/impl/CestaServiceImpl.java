@@ -6,14 +6,17 @@ import com.example.comercio.comercioApp.dto.UsuarioDTO;
 import com.example.comercio.comercioApp.entity.Articulo;
 import com.example.comercio.comercioApp.entity.Cesta;
 import com.example.comercio.comercioApp.entity.Usuario;
+import com.example.comercio.comercioApp.entity.Venta;
 import com.example.comercio.comercioApp.repository.IArticuloRepository;
 import com.example.comercio.comercioApp.repository.ICestaRepository;
 import com.example.comercio.comercioApp.repository.IUsuarioRepository;
+import com.example.comercio.comercioApp.repository.IVentaRepository;
 import com.example.comercio.comercioApp.service.CestaServiceInterface;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 @Service
@@ -25,6 +28,9 @@ public class CestaServiceImpl implements CestaServiceInterface {
 
     @Autowired
     private IArticuloRepository articuloRepository;
+
+    @Autowired
+    private IVentaRepository ventaRepository;
 
     private ModelMapper modelMapper = new ModelMapper();
 
@@ -60,7 +66,36 @@ public class CestaServiceImpl implements CestaServiceInterface {
     }
 
     @Override
-    public void realizarCompra(String nombreUsuario, List<ArticuloDTO> articulosDTO) {
+    public boolean realizarCompra(String nombreUsuario, String numTarjeta) {
+        Usuario usuario = usuarioRepository.findByUsername(nombreUsuario);
+        Cesta cesta = cestaRepository.findByUsuario(usuario);
+
+        if(cesta.getListadoArticulos().size() <= 0){
+            return false;
+        } else {
+            int stockActual = 0;
+
+            cesta.getListadoArticulos().stream().forEach((Articulo articulo)->{
+                usuario.getArticulosComprados().add(articulo);
+
+                Venta venta = new Venta();
+                venta.setArticulo(articulo);
+                venta.setFecha(LocalDate.now());
+                venta.setImporte(articulo.getPrecio());
+                venta.setNumTarjeta(numTarjeta);
+                venta.setUsuario(usuario);
+
+                articulo.getUsuariosCompradores().add(usuario);
+
+                articuloRepository.save(articulo);
+                ventaRepository.save(venta);
+                usuarioRepository.save(usuario);
+            });
+
+            cestaRepository.delete(cesta);
+
+            return true;
+        }
 
     }
 
