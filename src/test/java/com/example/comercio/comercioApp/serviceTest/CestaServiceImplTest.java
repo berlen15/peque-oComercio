@@ -23,6 +23,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 @ExtendWith(MockitoExtension.class)
 @RunWith(MockitoJUnitRunner.Silent.class)
 @SpringBootTest
@@ -72,75 +75,77 @@ public class CestaServiceImplTest {
 
     @Test
     public void añadirArticuloConStockTest(){
-        Articulo articulo_1 = new Articulo(1, "producto_1",
+        Articulo articulo1 = new Articulo(1, "producto_1",
                 19.0, new ArrayList<>(), 10, "Referencia_1");
 
-        Mockito.when(usuarioRepository.findByUsername("Belén")).thenReturn(usuario);
+        Mockito.when(usuarioRepository.findByUsername("belen")).thenReturn(usuario);
 
         Mockito.when(cestaRepository.findByUsuario(usuario)).thenReturn(cesta);
 
-        Mockito.when(articuloRepository.findByReferencia("Referencia_1")).thenReturn(articulo_1);
+        Mockito.when(articuloRepository.findByReferencia("Referencia_1")).thenReturn(articulo1);
 
-        cestaService.añadirArticulo("Belén", "Referencia_1");
+        cestaService.añadirArticulo("belen", "Referencia_1");
 
         Assert.assertEquals(cesta.getListadoArticulos().size(), 1);
-        Assert.assertTrue(articulo_1.getStock()==9);
+        Assert.assertTrue(articulo1.getStock()==9);
     }
 
     @Test
     public void añadirArticuloSinStockTest(){
-        Articulo articulo_1 = new Articulo(1, "producto_1",
+        Articulo articulo = new Articulo(1, "producto_1",
                 19.0, new ArrayList<>(), 0, "Referencia_1");
 
-        Mockito.when(usuarioRepository.findByUsername("Belén")).thenReturn(usuario);
+        Mockito.when(usuarioRepository.findByUsername("belen")).thenReturn(usuario);
 
         Mockito.when(cestaRepository.findByUsuario(usuario)).thenReturn(cesta);
 
-        Mockito.when(articuloRepository.findByReferencia("Referencia_1")).thenReturn(articulo_1);
+        Mockito.when(articuloRepository.findByReferencia("Referencia_1")).thenReturn(articulo);
 
-        cestaService.añadirArticulo("Belén", "Referencia_1");
+        cestaService.añadirArticulo("belen", "Referencia_1");
 
         Assert.assertEquals(cesta.getListadoArticulos().size(), 0);
-        Assert.assertTrue(articulo_1.getStock()==0);
+        Assert.assertTrue(articulo.getStock()==0);
     }
 
     @Test
     public void verCestaExistenteTest(){
-        Mockito.when(usuarioRepository.findByUsername("Belén")).thenReturn(usuario);
+        Mockito.when(usuarioRepository.findByUsername("belen")).thenReturn(usuario);
         Mockito.when(cestaRepository.findByUsuario(usuario)).thenReturn(cesta);        ;
 
-        Assert.assertTrue(cestaService.verCesta("Belén")!=null);
+        Assert.assertTrue(cestaService.verCesta("belen")!=null);
     }
 
     @Test
     public void verCestaNoExistenteTest(){
-        Mockito.when(usuarioRepository.findByUsername("Belén")).thenReturn(usuario);
+        Mockito.when(usuarioRepository.findByUsername("belen")).thenReturn(usuario);
         Mockito.when(cestaRepository.findByUsuario(usuario)).thenReturn(null);
 
-        Assert.assertTrue(cestaService.verCesta("Belén")==null);
+        Assert.assertTrue(cestaService.verCesta("belen")==null);
     }
 
     @Test
     public void realizarCompraTest(){
-        Mockito.when(usuarioRepository.findByUsername("Belen2")).thenReturn(usuario);
+        Mockito.when(usuarioRepository.findByUsername("belen2")).thenReturn(usuario);
         Mockito.when(cestaRepository.findByUsuario(usuario)).thenReturn(cesta2);
 
         Mockito.when(articuloRepository.findByReferencia("Referencia_1")).thenReturn(articulo1);
         Mockito.when(articuloRepository.findByReferencia("Referencia_2")).thenReturn(articulo2);
 
-        cestaService.añadirArticulo("Belen2", "Referencia_1");
-        cestaService.añadirArticulo("Belen2", "Referencia_1");
+        cestaService.añadirArticulo("belen2", "Referencia_1");
+        cestaService.añadirArticulo("belen2", "Referencia_1");
 
-        cestaService.realizarCompra("Belen2", "TARJ_EJEM");
+        cestaService.realizarCompra("belen2", "TARJ_EJEM");
+
+        verify(articuloRepository, times(2)).findByReferencia(Mockito.any(String.class));
 
         Mockito.when(cestaRepository.findByUsuario(usuario)).thenReturn(null);
-        Mockito.when(usuarioRepository.findByUsername("Belen2")).thenReturn(usuario2);
+        Mockito.when(usuarioRepository.findByUsername("belen2")).thenReturn(usuario2);
 
         Assert.assertTrue(articuloRepository.findByReferencia("Referencia_1").getUsuariosCompradores().contains(usuario));
         Assert.assertTrue(articuloRepository.findByReferencia("Referencia_2").getUsuariosCompradores().contains(usuario));
 
-        Assert.assertTrue(cestaRepository.findByUsuario(usuario)==null);
-        Assert.assertTrue(usuarioRepository.findByUsername("Belen2").getArticulosComprados().size()==2);
+        Assert.assertNull(cestaRepository.findByUsuario(usuario));
+        Assert.assertTrue(usuarioRepository.findByUsername("belen2").getArticulosComprados().size()==2);
 
     }
 }

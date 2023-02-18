@@ -29,24 +29,24 @@ public class ArticuloServiceImplTest {
     private ArticuloServiceImpl articuloService;
 
     List<Articulo> disponibles;
-    Articulo articulo_1;
-    Articulo articulo_2;
-    Articulo articulo_3;
+    Articulo articulo1;
+    Articulo articulo2;
+    Articulo articulo3;
     @Before
     public void setUp(){
-        Articulo articulo_1 = new Articulo(1, "producto_1",
+        Articulo articulo1 = new Articulo(1, "producto_1",
                 19.0, new ArrayList<>(), 10, "Referencia_1");
 
-        Articulo articulo_2 = new Articulo(2, "producto_2",
+        Articulo articulo2 = new Articulo(2, "producto_2",
                 19.0, new ArrayList<>(), 20, "Referencia_2");
 
-        Articulo articulo_3 = new Articulo(3, "producto_3",
+        Articulo articulo3 = new Articulo(3, "producto_3",
                 19.0, new ArrayList<>(), 30, "Referencia_3");
 
         disponibles = new ArrayList<>();
-        disponibles.add(articulo_1);
-        disponibles.add(articulo_2);
-        disponibles.add(articulo_3);
+        disponibles.add(articulo1);
+        disponibles.add(articulo2);
+        disponibles.add(articulo3);
     }
 
     @Test

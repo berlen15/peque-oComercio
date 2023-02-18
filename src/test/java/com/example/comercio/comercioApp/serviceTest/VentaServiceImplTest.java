@@ -37,15 +37,15 @@ public class VentaServiceImplTest {
     Venta venta2;
     @Before
     public void setUp(){
-        final Articulo articulo_1 = new Articulo(1, "producto_1",
+        final Articulo articulo1 = new Articulo(1, "producto_1",
                 19.0, new ArrayList<>(), 10, "Referencia_1");
 
         final Usuario usuario = new Usuario (1,"belen", "belen@prueba.com", "Belén");
 
         vendidos = new ArrayList<>();
 
-        venta1 = new Venta(1, LocalDate.now(), articulo_1, 16.9, usuario, "TARJ1");
-        venta2 = new Venta(1, LocalDate.now(), articulo_1, 16.9, usuario, "TARJ2");
+        venta1 = new Venta(1, LocalDate.now(), articulo1, 16.9, usuario, "TARJ1");
+        venta2 = new Venta(1, LocalDate.now(), articulo1, 16.9, usuario, "TARJ2");
 
         vendidos.add(venta1);
         vendidos.add(venta2);
