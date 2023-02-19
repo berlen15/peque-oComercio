@@ -24,6 +24,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 
+import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -115,6 +116,8 @@ public class CestaControllerTest {
     }
     @Test
     public void añadirArticuloNoExistente() throws Exception {
+        doReturn(null).when(articuloService).obtenerArticulo(Mockito.any(String.class));
+
         mockMvc.perform(post("/cesta/añadirArticulo/{referencia}", "REF1")
                         .contentType("application/json")
                         .param("nombreUsuario", "belen"))
@@ -123,21 +126,17 @@ public class CestaControllerTest {
 
     @Test
     public void añadirArticuloExistente() throws Exception {
-        Mockito.when(articuloRepository.findByReferencia("REF1")).thenReturn(articulo);
-        Mockito.when(articuloService.obtenerArticulo("REF1")).thenReturn(articuloDTO);
-
+       doReturn(articuloDTO).when(articuloService).obtenerArticulo(Mockito.any(String.class));
+       doReturn(true).when(cestaService).añadirArticulo(Mockito.any(String.class), Mockito.any(String.class));
 
         mockMvc.perform(post("/cesta/añadirArticulo/{referencia}", "REF1")
-                        .contentType("application/json")
                         .param("nombreUsuario", "belen"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void añadirArticuloSinStock() throws Exception {
-        Mockito.when(articuloRepository.findByReferencia(Mockito.any(String.class))).thenReturn(this.articulo2);
-
-        Mockito.when(articuloService.obtenerArticulo(Mockito.any(String.class))).thenReturn(this.articuloDTO2);
+        doReturn(articuloDTO2).when(articuloService).obtenerArticulo(Mockito.any(String.class));
 
         mockMvc.perform(post("/cesta/añadirArticulo/{referencia}", "REF2")
                         .contentType("application/json")
