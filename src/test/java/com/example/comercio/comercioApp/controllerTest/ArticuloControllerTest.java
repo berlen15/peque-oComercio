@@ -4,6 +4,7 @@ import com.example.comercio.comercioApp.dto.ArticuloDTO;
 import com.example.comercio.comercioApp.service.impl.ArticuloServiceImpl;
 import com.example.comercio.comercioApp.service.impl.VentaServiceImpl;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
@@ -36,17 +37,34 @@ public class ArticuloControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    ArticuloDTO articulo;
+    ArticuloDTO articulo2;
+    ArticuloDTO articulo3;
+    List<ArticuloDTO> articulos;
+    List<ArticuloDTO> articulos2;
+
+    @Before
+    public void setUp(){
+        articulo = new ArticuloDTO();
+        articulo.setIdArticulo(43);
+        articulos = Arrays.asList(articulo);
+
+        articulo2 = new ArticuloDTO();
+        articulo.setIdArticulo(43);
+
+        articulo3 = new ArticuloDTO();
+        articulo.setIdArticulo(44);
+
+        articulos2 = Arrays.asList(articulo, articulo2);
+
+    }
+
     @Test
     public void whenContextLoads_thenServiceISNotNull() {
         Assert.assertNotNull(articuloService);
     }
     @Test
     public void articulosDisponiblesTest() throws Exception {
-
-        ArticuloDTO articulo = new ArticuloDTO();
-        articulo.setIdArticulo(1);
-        List<ArticuloDTO> articulos = Arrays.asList(articulo);
-
         Mockito.when(articuloService.obtenerDisponibles()).thenReturn(articulos);
 
         this.mockMvc.perform((get("/articulos/disponibles"))).andExpect(
@@ -56,7 +74,6 @@ public class ArticuloControllerTest {
 
     @Test
     public void articulosDisponiblesVacioTest() throws Exception {
-
         Mockito.when(articuloService.obtenerDisponibles()).thenReturn(null);
 
         this.mockMvc.perform((get("/articulos/disponibles"))).andExpect(
@@ -66,13 +83,6 @@ public class ArticuloControllerTest {
 
     @Test
     public void articulosmasVendidosTest() throws Exception {
-
-        ArticuloDTO articulo = new ArticuloDTO();
-        articulo.setIdArticulo(1);
-        ArticuloDTO articulo2 = new ArticuloDTO();
-        articulo.setIdArticulo(2);
-        List<ArticuloDTO> articulos = Arrays.asList(articulo, articulo2);
-
         Mockito.when(ventaService.masVendidosUltimaSemana()).thenReturn(articulos);
 
         this.mockMvc.perform((get("/articulos/topVentas"))).andExpect(
@@ -82,7 +92,6 @@ public class ArticuloControllerTest {
 
     @Test
     public void articulosmasVendidosVacioTest() throws Exception {
-
         Mockito.when(ventaService.masVendidosUltimaSemana()).thenReturn(null);
 
         this.mockMvc.perform((get("/articulos/topVentas"))).andExpect(

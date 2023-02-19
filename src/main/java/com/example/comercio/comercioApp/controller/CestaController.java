@@ -20,6 +20,10 @@ public class CestaController {
     @Autowired
     private ArticuloServiceImpl articuloService;
 
+    /*
+    * VER CESTA: Endpoint que nos permite visualizar la cesta de un usuario dado su nombre de usuario
+    */
+
     @GetMapping("/cesta")
     public ResponseEntity verCesta(@RequestParam String nombreUsuario){
         if(usuarioService.buscarUsuario(nombreUsuario)==null)
@@ -33,6 +37,12 @@ public class CestaController {
             return new ResponseEntity("La cesta está vacía", HttpStatus.NOT_FOUND);
         }
     }
+
+    /*
+    * AÑADIR ARTICULO:  Endpoint que nos permite añadir artículos a la cesta de un usuario dado su nombre de usuario y la referencia
+    * del artículo que se desea añadir.
+     */
+
     @PostMapping("/cesta/añadirArticulo/{referencia}")
     public ResponseEntity añadirArticulo(@RequestParam String nombreUsuario, @PathVariable String referencia){
         if(articuloService.obtenerArticulo(referencia)==null)
@@ -45,6 +55,10 @@ public class CestaController {
         }
     }
 
+    /*
+     * REALIZAR COMPRA:  Endpoint que premite realizar el pago de los artículos de una cesta de un usuario, dado su
+     * numero de tarjeta para realizar el pago.
+     */
     @PostMapping("/cesta/realizarCompra")
     public ResponseEntity realizarCompra(@RequestParam String nombreUsuario, @RequestBody String numTarjeta){
         if(numTarjeta == null || numTarjeta.isEmpty())

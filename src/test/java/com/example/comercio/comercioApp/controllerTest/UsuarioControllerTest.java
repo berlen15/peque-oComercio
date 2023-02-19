@@ -2,6 +2,7 @@ package com.example.comercio.comercioApp.controllerTest;
 
 import com.example.comercio.comercioApp.dto.UsuarioDTO;
 import com.example.comercio.comercioApp.service.impl.UsuarioServiceImpl;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
@@ -28,28 +29,31 @@ public class UsuarioControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    UsuarioDTO usuarioDTO;
+
+    @Before
+    public void setUp(){
+        usuarioDTO = new UsuarioDTO();
+        usuarioDTO.setId(4);
+        usuarioDTO.setUsername("belen_test");
+    }
+
     @Test
     public void verPerfilExistente() throws Exception {
-
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(1);
-        usuarioDTO.setUsername("belen");
-
         Mockito.when(usuarioService.buscarUsuario(Mockito.any(String.class))).thenReturn(usuarioDTO);
 
         this.mockMvc.perform((get("/usuario/perfil")
-                .param("nombreUsuario", "belen")))
+                .param("nombreUsuario", "belen_test")))
                 .andExpect(status().isOk());
 
     }
 
     @Test
     public void verPerfilNoExistente() throws Exception {
-
         Mockito.when(usuarioService.buscarUsuario(Mockito.any(String.class))).thenReturn(null);
 
         this.mockMvc.perform((get("/usuario/perfil")
-                .param("nombreUsuario", "belen")))
+                .param("nombreUsuario", "belen_noexiste")))
                 .andExpect(status().isBadRequest());
 
     }

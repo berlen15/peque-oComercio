@@ -34,10 +34,11 @@ public class VentaServiceImpl implements VentaServiceInterface {
             });
             return pojo2dto(articulos);
         }
-
+        //No existen artículos más vendidos en la última semana
         return null;
     }
 
+    //Método que permite convertir el objeto pojo a su correspondiente Data Transfer Object.
     private List<ArticuloDTO> pojo2dto(List<Articulo> articulos){
         List<ArticuloDTO> articulosDTO = new ArrayList<>();
         articulos.stream().forEach((Articulo articulo)->{

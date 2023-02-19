@@ -20,6 +20,8 @@ public class UsuarioServiceImpl implements UsuarioServiceInterface {
     @Override
     public UsuarioDTO buscarUsuario(String username) {
         Usuario usuario = usuarioRepository.findByUsername(username);
+
+        //Si existe el usuario, lo transformamos a su correspondiente Data Transfer Object para ser retornado.
         if(usuario != null){
             return modelMapper.map(usuario, UsuarioDTO.class);
         }

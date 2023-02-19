@@ -19,6 +19,7 @@ public class ArticuloController {
     @Autowired
     VentaServiceImpl ventaService;
 
+    //Endpoint para obtener los artículos cuyo stock sea mayor que cero (disponibles)
     @GetMapping("/articulos/disponibles")
     public ResponseEntity articulosDisponibles(){
         List<ArticuloDTO> articulos = this.articuloService.obtenerDisponibles();
@@ -29,6 +30,7 @@ public class ArticuloController {
         }
     }
 
+    //Endpoint para obtener los artículos con más ventas en la última semana
     @GetMapping("/articulos/topVentas")
     public ResponseEntity articulosMasVendidos(){
         List<ArticuloDTO> articulos = this.ventaService.masVendidosUltimaSemana();
