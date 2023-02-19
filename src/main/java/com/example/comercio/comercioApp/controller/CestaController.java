@@ -23,24 +23,25 @@ public class CestaController {
     @GetMapping("/cesta")
     public ResponseEntity verCesta(@RequestParam String nombreUsuario){
         if(usuarioService.buscarUsuario(nombreUsuario)==null)
-            return new ResponseEntity("El usuario no está dado de alta", HttpStatus.OK);
+            return new ResponseEntity("El usuario no está dado de alta", HttpStatus.NOT_FOUND);
 
         CestaDTO cestaDTO = cestaService.verCesta(nombreUsuario);
 
         if(cestaDTO!= null){
             return new ResponseEntity(cestaDTO, HttpStatus.OK);
         } else {
-            return new ResponseEntity("La cesta está vacía", HttpStatus.OK);
+            return new ResponseEntity("La cesta está vacía", HttpStatus.NOT_FOUND);
         }
     }
     @PostMapping("/cesta/añadirArticulo/{referencia}")
     public ResponseEntity añadirArticulo(@RequestParam String nombreUsuario, @PathVariable String referencia){
         if(articuloService.obtenerArticulo(referencia)==null)
-            return new ResponseEntity("El articulo no existe",HttpStatus.BAD_REQUEST);
+            return new ResponseEntity("El articulo no existe",HttpStatus.NOT_FOUND);
         if(cestaService.añadirArticulo(nombreUsuario, referencia)){
-            return new ResponseEntity("Artículo creado con éxito",HttpStatus.CREATED);
+            return new ResponseEntity("Se ha añadido el artículo a la cesta",HttpStatus.OK);
         }else{
-            return new ResponseEntity("El articulo no se ha añadido correctamente. Por favor, inténtelo de nuevo más tarde", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity("El articulo no se ha añadido correctamente. " +
+                    "Es posible que no haya stock de este artículo", HttpStatus.BAD_REQUEST);
         }
     }
 

@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -18,6 +19,7 @@ public class VentaServiceImpl implements VentaServiceInterface {
     private IVentaRepository ventaRepository;
 
     private ModelMapper modelMapper = new ModelMapper();
+    @Transactional
     @Override
     public List<ArticuloDTO> masVendidosUltimaSemana(){
         List<Articulo> articulos = new ArrayList<>();

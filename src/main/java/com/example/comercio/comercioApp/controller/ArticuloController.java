@@ -1,17 +1,15 @@
 package com.example.comercio.comercioApp.controller;
 
 import com.example.comercio.comercioApp.dto.ArticuloDTO;
-import com.example.comercio.comercioApp.entity.Articulo;
 import com.example.comercio.comercioApp.service.impl.ArticuloServiceImpl;
 import com.example.comercio.comercioApp.service.impl.VentaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.text.ParseException;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 public class ArticuloController {
@@ -22,12 +20,22 @@ public class ArticuloController {
     VentaServiceImpl ventaService;
 
     @GetMapping("/articulos/disponibles")
-    public List<ArticuloDTO> articulosDisponibles(){
-        return this.articuloService.obtenerDisponibles();
+    public ResponseEntity articulosDisponibles(){
+        List<ArticuloDTO> articulos = this.articuloService.obtenerDisponibles();
+        if(articulos != null){
+            return new ResponseEntity(articulos, HttpStatus.OK);
+        } else {
+            return new ResponseEntity("No existen artículos disponibles en este momento", HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/articulos/topVentas")
-    public List<ArticuloDTO> articulosMasVendidos(){
-       return this.ventaService.masVendidosUltimaSemana();
+    public ResponseEntity articulosMasVendidos(){
+        List<ArticuloDTO> articulos = this.ventaService.masVendidosUltimaSemana();
+        if(articulos != null){
+            return new ResponseEntity(articulos, HttpStatus.OK);
+        } else {
+            return new ResponseEntity("Ha habido un problema al cargar el listado de top de ventas", HttpStatus.NOT_FOUND);
+        }
     }
 }

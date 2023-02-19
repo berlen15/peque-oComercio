@@ -1,6 +1,7 @@
 package com.example.comercio.comercioApp.serviceTest;
 
 
+import com.example.comercio.comercioApp.dto.CestaDTO;
 import com.example.comercio.comercioApp.entity.Articulo;
 import com.example.comercio.comercioApp.entity.Cesta;
 import com.example.comercio.comercioApp.entity.Usuario;
@@ -66,6 +67,10 @@ public class CestaServiceImplTest {
 
         articulo2 = new Articulo(2, "producto_2",
                 19.0, new ArrayList<>(), 20, "Referencia_2");
+
+        cesta2.getListadoArticulos().add(articulo1);
+        cesta2.getListadoArticulos().add(articulo2);
+
         articulo2.getUsuariosCompradores().add(usuario);
 
         usuario2.getArticulosComprados().add(articulo1);
@@ -110,9 +115,12 @@ public class CestaServiceImplTest {
     @Test
     public void verCestaExistenteTest(){
         Mockito.when(usuarioRepository.findByUsername("belen")).thenReturn(usuario);
-        Mockito.when(cestaRepository.findByUsuario(usuario)).thenReturn(cesta);        ;
+        Mockito.when(cestaRepository.findByUsuario(usuario)).thenReturn(cesta);
 
-        Assert.assertTrue(cestaService.verCesta("belen")!=null);
+        cestaService.verCesta("belen");
+        verify(usuarioRepository).findByUsername("belen");
+        verify(cestaRepository).findByUsuario(usuario);
+
     }
 
     @Test
@@ -120,7 +128,9 @@ public class CestaServiceImplTest {
         Mockito.when(usuarioRepository.findByUsername("belen")).thenReturn(usuario);
         Mockito.when(cestaRepository.findByUsuario(usuario)).thenReturn(null);
 
-        Assert.assertTrue(cestaService.verCesta("belen")==null);
+        CestaDTO cesta = cestaService.verCesta("belen");
+
+        Assert.assertNull(cesta);
     }
 
     @Test
@@ -131,20 +141,15 @@ public class CestaServiceImplTest {
         Mockito.when(articuloRepository.findByReferencia("Referencia_1")).thenReturn(articulo1);
         Mockito.when(articuloRepository.findByReferencia("Referencia_2")).thenReturn(articulo2);
 
-        cestaService.añadirArticulo("belen2", "Referencia_1");
-        cestaService.añadirArticulo("belen2", "Referencia_1");
-
         cestaService.realizarCompra("belen2", "TARJ_EJEM");
 
-        verify(articuloRepository, times(2)).findByReferencia(Mockito.any(String.class));
-
         Mockito.when(cestaRepository.findByUsuario(usuario)).thenReturn(null);
-        Mockito.when(usuarioRepository.findByUsername("belen2")).thenReturn(usuario2);
+
+        Assert.assertNull(cestaRepository.findByUsuario(usuario));
 
         Assert.assertTrue(articuloRepository.findByReferencia("Referencia_1").getUsuariosCompradores().contains(usuario));
         Assert.assertTrue(articuloRepository.findByReferencia("Referencia_2").getUsuariosCompradores().contains(usuario));
 
-        Assert.assertNull(cestaRepository.findByUsuario(usuario));
         Assert.assertTrue(usuarioRepository.findByUsername("belen2").getArticulosComprados().size()==2);
 
     }

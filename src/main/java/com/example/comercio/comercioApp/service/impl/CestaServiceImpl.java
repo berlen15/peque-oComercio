@@ -16,6 +16,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,7 @@ public class CestaServiceImpl implements CestaServiceInterface {
 
     private ModelMapper modelMapper = new ModelMapper();
 
+    @Transactional
     @Override
     public boolean añadirArticulo(String nombreUsuario, String referencia) {
         if(referencia == null || referencia.isEmpty()) return false;
@@ -73,7 +75,7 @@ public class CestaServiceImpl implements CestaServiceInterface {
         if(cesta == null ){
             return false;
         } else {
-            if(cesta.getListadoArticulos().size() > 0) return false;
+            if(cesta.getListadoArticulos().size() < 1) return false;
             cesta.getListadoArticulos().stream().forEach((Articulo articulo)->{
                 usuario.getArticulosComprados().add(articulo);
 
@@ -88,7 +90,6 @@ public class CestaServiceImpl implements CestaServiceInterface {
 
                 articuloRepository.save(articulo);
                 ventaRepository.save(venta);
-                usuarioRepository.save(usuario);
             });
 
             cestaRepository.delete(cesta);

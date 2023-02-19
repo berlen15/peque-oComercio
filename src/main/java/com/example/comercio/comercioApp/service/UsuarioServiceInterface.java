@@ -1,7 +1,7 @@
 package com.example.comercio.comercioApp.service;
 
-import com.example.comercio.comercioApp.entity.Usuario;
+import com.example.comercio.comercioApp.dto.UsuarioDTO;
 
 public interface UsuarioServiceInterface {
-    public Usuario buscarUsuario(String username);
+    public UsuarioDTO buscarUsuario(String username);
 }

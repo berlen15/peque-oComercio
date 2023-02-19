@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,8 @@ public class ArticuloServiceImpl implements ArticuloServiceInterface {
     private IArticuloRepository articuloRepository;
 
     private ModelMapper modelMapper = new ModelMapper();
+
+    @Transactional
     @Override
     public List<ArticuloDTO> obtenerDisponibles() {
         List<ArticuloDTO> articulos = new ArrayList<>();
@@ -29,6 +32,7 @@ public class ArticuloServiceImpl implements ArticuloServiceInterface {
         return articulos;
     }
 
+    @Transactional
     @Override
     public ArticuloDTO obtenerArticulo(String referencia) {
         return articuloRepository.findByReferencia(referencia) != null ?
