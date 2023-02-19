@@ -1,6 +1,7 @@
 package com.example.comercio.comercioApp.serviceTest;
 
 import com.example.comercio.comercioApp.entity.Usuario;
+import com.example.comercio.comercioApp.exception.UsuarioException;
 import com.example.comercio.comercioApp.repository.IUsuarioRepository;
 import com.example.comercio.comercioApp.service.impl.UsuarioServiceImpl;
 import org.junit.Assert;
@@ -43,11 +44,9 @@ public class UsuarioServiceImplTest {
 
     @Test
     public void buscarUsuarioNoExistenteTest(){
-        Mockito.when(usuarioRepository.findByUsername("belen")).thenReturn(null);
+        Mockito.when(usuarioRepository.findByUsername(Mockito.any(String.class))).thenThrow(UsuarioException.class);
 
-        usuarioService.buscarUsuario("belen");
-
-        Assert.assertEquals(usuarioService.buscarUsuario("belen"), null);
+        Assert.assertThrows(UsuarioException.class, () -> usuarioService.buscarUsuario("belen_00"));
     }
 
 }

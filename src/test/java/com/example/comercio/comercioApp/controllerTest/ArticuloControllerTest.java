@@ -92,6 +92,7 @@ public class ArticuloControllerTest {
 
     @Test
     public void articulosmasVendidosVacioTest() throws Exception {
+
         Mockito.when(ventaService.masVendidosUltimaSemana()).thenReturn(null);
 
         this.mockMvc.perform((get("/articulos/topVentas"))).andExpect(

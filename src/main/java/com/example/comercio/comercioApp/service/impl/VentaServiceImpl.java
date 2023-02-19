@@ -21,7 +21,7 @@ public class VentaServiceImpl implements VentaServiceInterface {
     private ModelMapper modelMapper = new ModelMapper();
     @Transactional
     @Override
-    public List<ArticuloDTO> masVendidosUltimaSemana(){
+    public List<ArticuloDTO> masVendidosUltimaSemana() {
         List<Articulo> articulos = new ArrayList<>();
 
         LocalDate ultimaSemana = LocalDate.now().minusDays(7);
