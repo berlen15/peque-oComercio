@@ -1,6 +1,5 @@
 package com.example.comercio.comercioApp.service;
 
-import com.example.comercio.comercioApp.dto.ArticuloDTO;
 import com.example.comercio.comercioApp.dto.CestaDTO;
 
 import java.util.List;

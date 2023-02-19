@@ -4,7 +4,6 @@ import com.example.comercio.comercioApp.dto.UsuarioDTO;
 import com.example.comercio.comercioApp.exception.ErrorResponse;
 import com.example.comercio.comercioApp.exception.UsuarioException;
 import com.example.comercio.comercioApp.service.impl.UsuarioServiceImpl;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
