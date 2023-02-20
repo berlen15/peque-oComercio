@@ -2,6 +2,7 @@ package com.example.comercio.comercioApp.service.impl;
 
 import com.example.comercio.comercioApp.dto.ArticuloDTO;
 import com.example.comercio.comercioApp.entity.Articulo;
+import com.example.comercio.comercioApp.exception.ArticuloException;
 import com.example.comercio.comercioApp.repository.IArticuloRepository;
 import com.example.comercio.comercioApp.service.ArticuloServiceInterface;
 import org.modelmapper.ModelMapper;
@@ -25,13 +26,15 @@ public class ArticuloServiceImpl implements ArticuloServiceInterface {
         List<ArticuloDTO> articulos = new ArrayList<>();
 
         List<Articulo> articulosEntity = articuloRepository.findByStockGreaterThan(0);
+
+        if(articulosEntity==null || articulosEntity.isEmpty()) throw new ArticuloException("No existen artículos disponibles");
+
         //Buscamos aquellos artículos que cumplan con la condición. Si la lista devuelve artículos, lo transformamos
         //a su correspondiente Data Transfer Object con el fin de retornarlo.
-        if(articulosEntity != null){
-            articuloRepository.findByStockGreaterThan(0).stream().forEach((final Articulo articulo) -> {
-                articulos.add(modelMapper.map(articulo, ArticuloDTO.class));
-            });
-        }
+        articuloRepository.findByStockGreaterThan(0).stream().forEach((final Articulo articulo) -> {
+            articulos.add(modelMapper.map(articulo, ArticuloDTO.class));
+        });
+
         return articulos;
     }
 
@@ -40,7 +43,10 @@ public class ArticuloServiceImpl implements ArticuloServiceInterface {
     public ArticuloDTO obtenerArticulo(String referencia) {
         //En caso de que el artículo buscado exista, lo transformamos a su correspondiente Data Transfer Object.
         //En caso contrario, retornaremos null
-        return articuloRepository.findByReferencia(referencia) != null ?
-                modelMapper.map(articuloRepository.findByReferencia(referencia), ArticuloDTO.class) : null;
+        Articulo articulo = articuloRepository.findByReferencia(referencia);
+
+        if(articulo == null) throw new ArticuloException("El artículo no existe");
+
+        return modelMapper.map(articulo, ArticuloDTO.class);
     }
 }

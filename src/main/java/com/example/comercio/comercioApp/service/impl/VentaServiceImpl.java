@@ -3,6 +3,7 @@ package com.example.comercio.comercioApp.service.impl;
 import com.example.comercio.comercioApp.dto.ArticuloDTO;
 import com.example.comercio.comercioApp.entity.Articulo;
 import com.example.comercio.comercioApp.entity.Venta;
+import com.example.comercio.comercioApp.exception.ArticuloException;
 import com.example.comercio.comercioApp.repository.IVentaRepository;
 import com.example.comercio.comercioApp.service.VentaServiceInterface;
 import org.modelmapper.ModelMapper;
@@ -28,14 +29,13 @@ public class VentaServiceImpl implements VentaServiceInterface {
 
         List<Venta> ventas = ventaRepository.findByFechaGreaterThan(ultimaSemana);
 
-        if(ventas != null){
-            ventaRepository.findByFechaGreaterThan(ultimaSemana).stream().forEach((final Venta v)->{
-                articulos.add(v.getArticulo());
-            });
-            return pojo2dto(articulos);
-        }
-        //No existen artículos más vendidos en la última semana
-        return null;
+        if(ventas == null)throw new ArticuloException("No hay articulos en el top de ventas");
+
+        ventaRepository.findByFechaGreaterThan(ultimaSemana).stream().forEach((final Venta v)->{
+            articulos.add(v.getArticulo());
+        });
+        return pojo2dto(articulos);
+
     }
 
     //Método que permite convertir el objeto pojo a su correspondiente Data Transfer Object.

@@ -1,14 +1,21 @@
 package com.example.comercio.comercioApp.dto;
 
 
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 import java.util.List;
 
 public class UsuarioDTO implements Serializable {
+    @ApiModelProperty(hidden = true)
     private Integer id;
+    @ApiModelProperty(position = 0)
     private String username;
+    @ApiModelProperty(position = 1)
     private String email;
+    @ApiModelProperty(position = 2)
     private String nombre;
+    @ApiModelProperty(position = 3)
     private List<ArticuloDTO> articulosComprados;
 
     public Integer getId() {

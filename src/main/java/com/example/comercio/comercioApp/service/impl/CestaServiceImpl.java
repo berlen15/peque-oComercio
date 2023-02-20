@@ -7,6 +7,9 @@ import com.example.comercio.comercioApp.entity.Articulo;
 import com.example.comercio.comercioApp.entity.Cesta;
 import com.example.comercio.comercioApp.entity.Usuario;
 import com.example.comercio.comercioApp.entity.Venta;
+import com.example.comercio.comercioApp.exception.ArticuloException;
+import com.example.comercio.comercioApp.exception.CestaException;
+import com.example.comercio.comercioApp.exception.UsuarioException;
 import com.example.comercio.comercioApp.repository.IArticuloRepository;
 import com.example.comercio.comercioApp.repository.ICestaRepository;
 import com.example.comercio.comercioApp.repository.IUsuarioRepository;
@@ -51,6 +54,8 @@ public class CestaServiceImpl implements CestaServiceInterface {
 
         Articulo articulo = articuloRepository.findByReferencia(referencia);
 
+        if(articuloRepository.findByReferencia(referencia)==null) throw new ArticuloException("El artículo no existe");
+
         if(articulo.getStock()>0){
             cesta.getListadoArticulos().add(articulo);
 
@@ -67,6 +72,7 @@ public class CestaServiceImpl implements CestaServiceInterface {
     @Override
     public CestaDTO verCesta(String  nombreUsuario) {
         Usuario usuario = usuarioRepository.findByUsername(nombreUsuario);
+        if (usuario == null) throw new UsuarioException("El usuario no existe");
         return pojo2dto(cestaRepository.findByUsuario(usuario));
     }
 
@@ -77,7 +83,7 @@ public class CestaServiceImpl implements CestaServiceInterface {
 
         //Si la cesta no está inicializada, se retorna false, ya que no existe.
         if(cesta == null ){
-            return false;
+            throw new CestaException("Ha habido un problema con la cesta.");
         } else {
             //Si la cesta no tiene artículos, no se podrá efectuar la compra. Retornamos false
             if(cesta.getListadoArticulos().size() < 1) return false;

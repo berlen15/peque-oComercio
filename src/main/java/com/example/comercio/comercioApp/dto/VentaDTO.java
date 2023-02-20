@@ -4,20 +4,28 @@ package com.example.comercio.comercioApp.dto;
 import com.example.comercio.comercioApp.entity.Articulo;
 import com.example.comercio.comercioApp.entity.Usuario;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 
 public class VentaDTO implements Serializable {
+    @ApiModelProperty(hidden = true)
     private Integer idVenta;
+    @ApiModelProperty(position = 0)
     private LocalDate fecha;
+    @ApiModelProperty(position = 1)
 
     private Articulo articulo;
+    @ApiModelProperty(position = 2)
 
     private double importe;
+    @ApiModelProperty(position = 3)
     private Usuario usuario;
+    @ApiModelProperty(position = 4)
 
     private String numTarjeta;
+    @ApiModelProperty(position = 5)
 
     public Integer getIdVenta() {
         return idVenta;

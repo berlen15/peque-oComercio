@@ -1,6 +1,7 @@
 package com.example.comercio.comercioApp.controllerTest;
 
 import com.example.comercio.comercioApp.dto.ArticuloDTO;
+import com.example.comercio.comercioApp.exception.ArticuloException;
 import com.example.comercio.comercioApp.service.impl.ArticuloServiceImpl;
 import com.example.comercio.comercioApp.service.impl.VentaServiceImpl;
 import org.junit.Assert;
@@ -60,10 +61,6 @@ public class ArticuloControllerTest {
     }
 
     @Test
-    public void whenContextLoads_thenServiceISNotNull() {
-        Assert.assertNotNull(articuloService);
-    }
-    @Test
     public void articulosDisponiblesTest() throws Exception {
         Mockito.when(articuloService.obtenerDisponibles()).thenReturn(articulos);
 
@@ -74,7 +71,7 @@ public class ArticuloControllerTest {
 
     @Test
     public void articulosDisponiblesVacioTest() throws Exception {
-        Mockito.when(articuloService.obtenerDisponibles()).thenReturn(null);
+        Mockito.when(articuloService.obtenerDisponibles()).thenThrow(ArticuloException.class);
 
         this.mockMvc.perform((get("/articulos/disponibles"))).andExpect(
                 status().isNotFound());
@@ -92,8 +89,7 @@ public class ArticuloControllerTest {
 
     @Test
     public void articulosmasVendidosVacioTest() throws Exception {
-
-        Mockito.when(ventaService.masVendidosUltimaSemana()).thenReturn(null);
+        Mockito.when(ventaService.masVendidosUltimaSemana()).thenThrow(ArticuloException.class);
 
         this.mockMvc.perform((get("/articulos/topVentas"))).andExpect(
                 status().isNotFound());

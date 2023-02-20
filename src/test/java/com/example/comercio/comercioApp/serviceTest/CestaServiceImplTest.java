@@ -5,6 +5,9 @@ import com.example.comercio.comercioApp.dto.CestaDTO;
 import com.example.comercio.comercioApp.entity.Articulo;
 import com.example.comercio.comercioApp.entity.Cesta;
 import com.example.comercio.comercioApp.entity.Usuario;
+import com.example.comercio.comercioApp.exception.ArticuloException;
+import com.example.comercio.comercioApp.exception.CestaException;
+import com.example.comercio.comercioApp.exception.UsuarioException;
 import com.example.comercio.comercioApp.repository.IArticuloRepository;
 import com.example.comercio.comercioApp.repository.ICestaRepository;
 import com.example.comercio.comercioApp.repository.IUsuarioRepository;
@@ -152,5 +155,27 @@ public class CestaServiceImplTest {
 
         Assert.assertTrue(usuarioRepository.findByUsername("belen2").getArticulosComprados().size()==2);
 
+    }
+
+    @Test
+    public void añadirArticuloNoExistenteTest(){
+        Mockito.when(articuloRepository.findByReferencia(Mockito.any(String.class))).thenReturn(null);
+
+        Assert.assertThrows(ArticuloException.class, () -> cestaService.añadirArticulo("belen", "ref"));
+    }
+
+    @Test
+    public void verCestaUsuarioNoExistenteTest(){
+        Mockito.when(usuarioRepository.findByUsername(Mockito.any(String.class))).thenReturn(null);
+
+        Assert.assertThrows(UsuarioException.class, () -> cestaService.verCesta("belen"));
+    }
+
+    @Test
+    public void realizarCompraCestaNoExistente(){
+        Mockito.when(cestaRepository.findByUsuario(Mockito.any(Usuario.class))).thenReturn(null);
+
+        Assert.assertThrows(CestaException.class, ()
+                -> cestaService.realizarCompra("belen", "tarjeta"));
     }
 }

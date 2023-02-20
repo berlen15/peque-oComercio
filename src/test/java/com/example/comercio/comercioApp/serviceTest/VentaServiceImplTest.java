@@ -3,6 +3,7 @@ package com.example.comercio.comercioApp.serviceTest;
 import com.example.comercio.comercioApp.entity.Articulo;
 import com.example.comercio.comercioApp.entity.Usuario;
 import com.example.comercio.comercioApp.entity.Venta;
+import com.example.comercio.comercioApp.exception.ArticuloException;
 import com.example.comercio.comercioApp.repository.IVentaRepository;
 import com.example.comercio.comercioApp.service.impl.VentaServiceImpl;
 import org.junit.Assert;
@@ -62,10 +63,8 @@ public class VentaServiceImplTest {
 
     @Test
     public void obtenerMasVendidosUltimaSemanaVacioTest(){
-        LocalDate ultimaSemana = LocalDate.now().minusDays(7);
+        Mockito.when(ventaRepository.findByFechaGreaterThan(Mockito.any(LocalDate.class))).thenReturn(null);
 
-        Mockito.when(ventaRepository.findByFechaGreaterThan(ultimaSemana)).thenReturn(null);
-
-        Assert.assertEquals(ventaService.masVendidosUltimaSemana(), null);
+        Assert.assertThrows(ArticuloException.class, () -> ventaService.masVendidosUltimaSemana());
     }
 }

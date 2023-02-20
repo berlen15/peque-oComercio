@@ -1,21 +1,26 @@
 package com.example.comercio.comercioApp.dto;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 import java.util.List;
 
 public class ArticuloDTO implements Serializable {
+    @ApiModelProperty(hidden = true)
     private int idArticulo;
+    @ApiModelProperty(position = 0)
     private String descripcion;
+    @ApiModelProperty(position = 1)
     private double precio;
+    @ApiModelProperty(position = 2)
     @JsonBackReference
     private List<VentaDTO> ventas;
-
+    @ApiModelProperty(position = 3)
     private int stock;
-
+    @ApiModelProperty(position = 4)
     private String referencia;
-
+    @ApiModelProperty(position = 5)
     @JsonBackReference
     private List<UsuarioDTO> usuariosCompradores;
 

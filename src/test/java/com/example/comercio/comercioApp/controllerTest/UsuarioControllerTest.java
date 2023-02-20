@@ -1,6 +1,7 @@
 package com.example.comercio.comercioApp.controllerTest;
 
 import com.example.comercio.comercioApp.dto.UsuarioDTO;
+import com.example.comercio.comercioApp.exception.UsuarioException;
 import com.example.comercio.comercioApp.service.impl.UsuarioServiceImpl;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -51,9 +52,10 @@ public class UsuarioControllerTest {
     }
 
     @Test
-    @Ignore
     public void verPerfilNoExistente() throws Exception {
-        doReturn(null).when(usuarioService).buscarUsuario("belen_noexiste");
+       // doReturn(null).when(usuarioService).buscarUsuario("belen_noexiste");
+        Mockito.when(usuarioService.buscarUsuario(Mockito.any(String.class))).thenThrow(UsuarioException.class);
+
         this.mockMvc.perform((get("/usuario/perfil")
                 .param("nombreUsuario", "belen_noexiste")))
                 .andExpect(status().isNotFound());

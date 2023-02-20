@@ -4,6 +4,9 @@ import com.example.comercio.comercioApp.dto.ArticuloDTO;
 import com.example.comercio.comercioApp.dto.CestaDTO;
 import com.example.comercio.comercioApp.dto.UsuarioDTO;
 import com.example.comercio.comercioApp.entity.Articulo;
+import com.example.comercio.comercioApp.exception.ArticuloException;
+import com.example.comercio.comercioApp.exception.CestaException;
+import com.example.comercio.comercioApp.exception.UsuarioException;
 import com.example.comercio.comercioApp.repository.IArticuloRepository;
 import com.example.comercio.comercioApp.service.impl.ArticuloServiceImpl;
 import com.example.comercio.comercioApp.service.impl.CestaServiceImpl;
@@ -105,9 +108,7 @@ public class CestaControllerTest {
 
     @Test
     public void verCestaNoExistenteTest() throws Exception {
-        Mockito.when(usuarioService.buscarUsuario(Mockito.any(String.class))).thenReturn(this.usuarioDTO);
-
-        Mockito.when(cestaService.verCesta(Mockito.any(String.class))).thenReturn(null);
+        Mockito.when(cestaService.verCesta(Mockito.any(String.class))).thenThrow(UsuarioException.class);
 
         this.mockMvc.perform((get("/cesta")
                         .param("nombreUsuario", "belen")))
@@ -115,14 +116,16 @@ public class CestaControllerTest {
 
     }
     @Test
-    public void añadirArticuloNoExistente() throws Exception {
-        doReturn(null).when(articuloService).obtenerArticulo(Mockito.any(String.class));
+    public void añadirArticuloSinInformarReferencia() throws Exception {
+        doReturn(false).when(cestaService).realizarCompra(Mockito.any(String.class), Mockito.any(String.class));
 
         mockMvc.perform(post("/cesta/añadirArticulo/{referencia}", "REF1")
                         .contentType("application/json")
                         .param("nombreUsuario", "belen"))
-                    .andExpect(status().isNotFound());
+                    .andExpect(status().isBadRequest());
     }
+
+
 
     @Test
     public void añadirArticuloExistente() throws Exception {
@@ -166,7 +169,10 @@ public class CestaControllerTest {
 
     @Test
     public void realizarCompraCestaVacia() throws Exception {
-        Mockito.when(cestaService.realizarCompra(Mockito.any(String.class), Mockito.any(String.class))).thenReturn(false);
+       // Mockito.when(cestaService.realizarCompra(Mockito.any(String.class), Mockito.any(String.class))).thenReturn(false);
+
+        Mockito.when(cestaService.realizarCompra(Mockito.any(String.class),
+                Mockito.any(String.class))).thenThrow(CestaException.class);
         String requestBody = "{\"numTarjeta\":\"Tarjeta\"}";
         mockMvc.perform(post("/cesta/realizarCompra")
                         .contentType("application/json")

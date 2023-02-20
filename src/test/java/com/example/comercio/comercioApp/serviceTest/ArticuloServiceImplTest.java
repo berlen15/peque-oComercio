@@ -1,8 +1,12 @@
 package com.example.comercio.comercioApp.serviceTest;
 
 import com.example.comercio.comercioApp.entity.Articulo;
+import com.example.comercio.comercioApp.entity.Venta;
+import com.example.comercio.comercioApp.exception.ArticuloException;
+import com.example.comercio.comercioApp.exception.UsuarioException;
 import com.example.comercio.comercioApp.repository.IArticuloRepository;
 import com.example.comercio.comercioApp.service.impl.ArticuloServiceImpl;
+import com.example.comercio.comercioApp.service.impl.VentaServiceImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -61,8 +65,7 @@ public class ArticuloServiceImplTest {
     public void obtenerDisponiblesStockVacioTest(){
         Mockito.when(articuloRepository.findByStockGreaterThan(0)).thenReturn(null);
 
-        Assert.assertNotEquals(articuloService.obtenerDisponibles().size(), 3);
-        Assert.assertTrue(articuloService.obtenerDisponibles().size()==0);
+        Assert.assertThrows(ArticuloException.class, () -> articuloService.obtenerDisponibles());
     }
 
     @Test
@@ -81,6 +84,6 @@ public class ArticuloServiceImplTest {
     public void obtenerArticuloNoExistenteTest(){
         Mockito.when(articuloRepository.findByReferencia("Referencia_4")).thenReturn(null);
 
-        Assert.assertTrue(articuloService.obtenerArticulo("Referencia_4")==null);
+        Assert.assertThrows(ArticuloException.class, () -> articuloService.obtenerArticulo("ref"));
     }
 }

@@ -2,6 +2,7 @@ package com.example.comercio.comercioApp.service.impl;
 
 import com.example.comercio.comercioApp.dto.UsuarioDTO;
 import com.example.comercio.comercioApp.entity.Usuario;
+import com.example.comercio.comercioApp.exception.UsuarioException;
 import com.example.comercio.comercioApp.repository.IUsuarioRepository;
 import com.example.comercio.comercioApp.service.UsuarioServiceInterface;
 import org.modelmapper.ModelMapper;
@@ -20,6 +21,7 @@ public class UsuarioServiceImpl implements UsuarioServiceInterface {
     @Override
     public UsuarioDTO buscarUsuario(String username){
         Usuario usuario = usuarioRepository.findByUsername(username);
+        if(usuario == null) throw new UsuarioException("Usuario no encontrado");
         return modelMapper.map(usuario, UsuarioDTO.class);
     }
 }
