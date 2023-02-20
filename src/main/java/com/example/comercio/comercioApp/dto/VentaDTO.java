@@ -15,17 +15,13 @@ public class VentaDTO implements Serializable {
     @ApiModelProperty(position = 0)
     private LocalDate fecha;
     @ApiModelProperty(position = 1)
-
     private Articulo articulo;
     @ApiModelProperty(position = 2)
-
     private double importe;
     @ApiModelProperty(position = 3)
     private Usuario usuario;
     @ApiModelProperty(position = 4)
-
     private String numTarjeta;
-    @ApiModelProperty(position = 5)
 
     public Integer getIdVenta() {
         return idVenta;

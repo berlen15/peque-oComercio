@@ -12,7 +12,6 @@ public class CestaDTO implements Serializable {
     private List<ArticuloDTO> listadoArticulos;
     @ApiModelProperty(position = 1)
     private UsuarioDTO usuario;
-    @ApiModelProperty(position = 2)
 
     public Integer getIdcesta() {
         return idcesta;
