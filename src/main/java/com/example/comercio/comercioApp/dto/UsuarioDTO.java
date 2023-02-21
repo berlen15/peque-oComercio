@@ -3,10 +3,13 @@ package com.example.comercio.comercioApp.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
 public class UsuarioDTO implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 2004384999734143725L;
     @ApiModelProperty(hidden = true)
     private Integer id;
     @ApiModelProperty(position = 0)

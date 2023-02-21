@@ -5,10 +5,13 @@ import com.example.comercio.comercioApp.entity.Articulo;
 import com.example.comercio.comercioApp.entity.Usuario;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 
 public class VentaDTO implements Serializable {
+    @Serial
+    private static final long serialVersionUID = -561465723180262507L;
     @ApiModelProperty(hidden = true)
     private Integer idVenta;
     @ApiModelProperty(position = 0)

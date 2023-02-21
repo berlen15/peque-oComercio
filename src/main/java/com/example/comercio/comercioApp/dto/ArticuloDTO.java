@@ -3,10 +3,13 @@ package com.example.comercio.comercioApp.dto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
 public class ArticuloDTO implements Serializable {
+    @Serial
+    private static final long serialVersionUID = -7222227040494239629L;
     @ApiModelProperty(hidden = true)
     private int idArticulo;
     @ApiModelProperty(position = 0)

@@ -87,7 +87,7 @@ public class CestaServiceImpl implements CestaServiceInterface {
         if(cesta == null ){
             throw new CestaException("Ha habido un problema con la cesta.");
         } else {
-            if(cesta.getListadoArticulos().size() < 1)
+            if(cesta.getListadoArticulos().isEmpty())
                 return false;
 
             cesta.getListadoArticulos().stream().forEach((Articulo articulo)->{
