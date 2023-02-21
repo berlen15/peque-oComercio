@@ -3,7 +3,6 @@ package com.example.comercio.comercioApp.dto;
 
 import com.example.comercio.comercioApp.entity.Articulo;
 import com.example.comercio.comercioApp.entity.Usuario;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;

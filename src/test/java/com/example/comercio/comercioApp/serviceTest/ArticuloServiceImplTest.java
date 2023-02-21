@@ -1,12 +1,9 @@
 package com.example.comercio.comercioApp.serviceTest;
 
 import com.example.comercio.comercioApp.entity.Articulo;
-import com.example.comercio.comercioApp.entity.Venta;
 import com.example.comercio.comercioApp.exception.ArticuloException;
-import com.example.comercio.comercioApp.exception.UsuarioException;
 import com.example.comercio.comercioApp.repository.IArticuloRepository;
 import com.example.comercio.comercioApp.service.impl.ArticuloServiceImpl;
-import com.example.comercio.comercioApp.service.impl.VentaServiceImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

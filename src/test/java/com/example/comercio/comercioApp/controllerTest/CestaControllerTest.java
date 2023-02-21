@@ -4,7 +4,6 @@ import com.example.comercio.comercioApp.dto.ArticuloDTO;
 import com.example.comercio.comercioApp.dto.CestaDTO;
 import com.example.comercio.comercioApp.dto.UsuarioDTO;
 import com.example.comercio.comercioApp.entity.Articulo;
-import com.example.comercio.comercioApp.exception.ArticuloException;
 import com.example.comercio.comercioApp.exception.CestaException;
 import com.example.comercio.comercioApp.exception.UsuarioException;
 import com.example.comercio.comercioApp.repository.IArticuloRepository;

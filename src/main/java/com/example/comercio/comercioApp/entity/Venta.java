@@ -17,7 +17,7 @@ public class Venta {
     @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate fecha;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="articulo_id", nullable = false)
     @JsonBackReference
     private Articulo articulo;
@@ -25,8 +25,7 @@ public class Venta {
     @Column(name="importe")
     private double importe;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 

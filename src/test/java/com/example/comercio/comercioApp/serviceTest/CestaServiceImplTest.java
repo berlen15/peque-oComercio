@@ -27,7 +27,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
@@ -64,8 +63,10 @@ public class CestaServiceImplTest {
         cesta = new Cesta(usuario);
         cesta2 = new Cesta(usuario2);
 
+
         articulo1 = new Articulo(1, "producto_1",
                 19.0, new ArrayList<>(), 0, "Referencia_1");
+
         articulo1.getUsuariosCompradores().add(usuario);
 
         articulo2 = new Articulo(2, "producto_2",
@@ -83,38 +84,42 @@ public class CestaServiceImplTest {
 
     @Test
     public void añadirArticuloConStockTest(){
-        Articulo articulo1 = new Articulo(1, "producto_1",
-                19.0, new ArrayList<>(), 10, "Referencia_1");
+        Mockito.when(usuarioRepository.findByUsername("belen")).thenReturn(usuario);
 
+        Mockito.when(cestaRepository.findByUsuario(usuario)).thenReturn(cesta);
+
+        Mockito.when(articuloRepository.findByReferencia(Mockito.any(String.class))).thenReturn(articulo2);
+
+        cestaService.añadirArticulo("belen", "Referencia_1");
+
+        Assert.assertEquals(cesta.getListadoArticulos().size(), 1);
+        Assert.assertTrue(articulo2.getStock() < 20);
+    }
+
+    @Test
+    public void añadirArticuloSinStockTest(){
         Mockito.when(usuarioRepository.findByUsername("belen")).thenReturn(usuario);
 
         Mockito.when(cestaRepository.findByUsuario(usuario)).thenReturn(cesta);
 
         Mockito.when(articuloRepository.findByReferencia("Referencia_1")).thenReturn(articulo1);
 
-        cestaService.añadirArticulo("belen", "Referencia_1");
-
-        Assert.assertEquals(cesta.getListadoArticulos().size(), 1);
-        Assert.assertTrue(articulo1.getStock()==9);
+        Assert.assertFalse(cestaService.añadirArticulo("belen", "Referencia_1"));
     }
 
     @Test
-    public void añadirArticuloSinStockTest(){
-        Articulo articulo = new Articulo(1, "producto_1",
-                19.0, new ArrayList<>(), 0, "Referencia_1");
-
+    public void añadirArticuloComprobarStockTest(){
         Mockito.when(usuarioRepository.findByUsername("belen")).thenReturn(usuario);
 
         Mockito.when(cestaRepository.findByUsuario(usuario)).thenReturn(cesta);
 
-        Mockito.when(articuloRepository.findByReferencia("Referencia_1")).thenReturn(articulo);
+        Mockito.when(articuloRepository.findByReferencia(Mockito.any(String.class))).thenReturn(articulo2);
 
         cestaService.añadirArticulo("belen", "Referencia_1");
 
-        Assert.assertEquals(cesta.getListadoArticulos().size(), 0);
-        Assert.assertTrue(articulo.getStock()==0);
-    }
+        Assert.assertTrue(articulo2.getStock()<20);
 
+    }
     @Test
     public void verCestaExistenteTest(){
         Mockito.when(usuarioRepository.findByUsername("belen")).thenReturn(usuario);

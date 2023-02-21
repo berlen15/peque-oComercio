@@ -29,7 +29,7 @@ public class VentaServiceImpl implements VentaServiceInterface {
 
         List<Venta> ventas = ventaRepository.findByFechaGreaterThan(ultimaSemana);
 
-        if(ventas == null)throw new ArticuloException("No hay articulos en el top de ventas");
+        if(ventas == null || ventas.isEmpty()) throw new ArticuloException("No hay articulos en el top de ventas");
 
         ventaRepository.findByFechaGreaterThan(ultimaSemana).stream().forEach((final Venta v)->{
             articulos.add(v.getArticulo());

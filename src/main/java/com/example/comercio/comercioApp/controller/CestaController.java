@@ -1,7 +1,6 @@
 package com.example.comercio.comercioApp.controller;
 
 import com.example.comercio.comercioApp.dto.CestaDTO;
-import com.example.comercio.comercioApp.entity.Articulo;
 import com.example.comercio.comercioApp.exception.ArticuloException;
 import com.example.comercio.comercioApp.exception.CestaException;
 import com.example.comercio.comercioApp.exception.ErrorResponse;

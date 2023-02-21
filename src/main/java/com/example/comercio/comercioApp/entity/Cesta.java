@@ -16,7 +16,7 @@ public class Cesta {
     @Column(name="idcesta")
     private Integer idcesta;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinTable(
             name = "cesta_articulo",
             joinColumns = @JoinColumn(name="cesta_id", nullable = false),

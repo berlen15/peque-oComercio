@@ -22,7 +22,7 @@ public class Usuario {
     @Column(name="nombre")
     private String nombre;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinTable(
             name = "articulo_usuario",
             joinColumns = @JoinColumn(name="usuario_id", nullable = false),

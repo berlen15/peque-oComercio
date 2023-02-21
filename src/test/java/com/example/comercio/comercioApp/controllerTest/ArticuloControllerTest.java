@@ -4,7 +4,6 @@ import com.example.comercio.comercioApp.dto.ArticuloDTO;
 import com.example.comercio.comercioApp.exception.ArticuloException;
 import com.example.comercio.comercioApp.service.impl.ArticuloServiceImpl;
 import com.example.comercio.comercioApp.service.impl.VentaServiceImpl;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
