@@ -27,25 +27,22 @@ public class ArticuloServiceImpl implements ArticuloServiceInterface {
 
         List<Articulo> articulosEntity = articuloRepository.findByStockGreaterThan(0);
 
-        if(articulosEntity==null || articulosEntity.isEmpty()) throw new ArticuloException("No existen artículos disponibles");
+        if(articulosEntity==null || articulosEntity.isEmpty())
+            throw new ArticuloException("No existen artículos disponibles");
 
-        //Buscamos aquellos artículos que cumplan con la condición. Si la lista devuelve artículos, lo transformamos
-        //a su correspondiente Data Transfer Object con el fin de retornarlo.
         articuloRepository.findByStockGreaterThan(0).stream().forEach((final Articulo articulo) -> {
             articulos.add(modelMapper.map(articulo, ArticuloDTO.class));
         });
-
         return articulos;
     }
 
     @Transactional
     @Override
     public ArticuloDTO obtenerArticulo(String referencia) {
-        //En caso de que el artículo buscado exista, lo transformamos a su correspondiente Data Transfer Object.
-        //En caso contrario, retornaremos null
         Articulo articulo = articuloRepository.findByReferencia(referencia);
 
-        if(articulo == null) throw new ArticuloException("El artículo no existe");
+        if(articulo == null)
+            throw new ArticuloException("El artículo no existe");
 
         return modelMapper.map(articulo, ArticuloDTO.class);
     }

@@ -38,7 +38,7 @@ public class VentaServiceImpl implements VentaServiceInterface {
 
     }
 
-    //Método que permite convertir el objeto pojo a su correspondiente Data Transfer Object.
+    //Método Pojo2Dto: Método que permite convertir el objeto pojo a su correspondiente Data Transfer Object.
     private List<ArticuloDTO> pojo2dto(List<Articulo> articulos){
         List<ArticuloDTO> articulosDTO = new ArrayList<>();
         articulos.stream().forEach((Articulo articulo)->{

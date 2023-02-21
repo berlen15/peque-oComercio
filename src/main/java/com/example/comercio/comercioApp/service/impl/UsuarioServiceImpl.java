@@ -21,7 +21,8 @@ public class UsuarioServiceImpl implements UsuarioServiceInterface {
     @Override
     public UsuarioDTO buscarUsuario(String username){
         Usuario usuario = usuarioRepository.findByUsername(username);
-        if(usuario == null) throw new UsuarioException("Usuario no encontrado");
+        if(usuario == null)
+            throw new UsuarioException("Usuario no encontrado");
         return modelMapper.map(usuario, UsuarioDTO.class);
     }
 }

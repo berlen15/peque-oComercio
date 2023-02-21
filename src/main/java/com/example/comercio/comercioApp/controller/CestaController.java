@@ -31,14 +31,15 @@ public class CestaController {
 
     @ApiOperation(value = "verCesta", notes = "Endpoint que nos permite visualizar la cesta de un usuario dado su nombre de usuario")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK. Se ha podido recuperar la cesta del usuario"),
+            @ApiResponse(code = 200, message = "OK. Se ha podido recuperar la cesta del usuario (Puede estar vacía="),
             @ApiResponse(code = 404, message = "Not found. El usuario no existe")})
     @ExceptionHandler (value = {UsuarioException.class})
     @GetMapping("/cesta")
     public ResponseEntity verCesta(@RequestParam String nombreUsuario) throws UsuarioException {
         try{
             CestaDTO cestaDTO = cestaService.verCesta(nombreUsuario);
-            return new ResponseEntity(cestaDTO, HttpStatus.OK);
+            Object result = cestaDTO != null ? cestaDTO : "Aún no tiene artículos añadidos a la cesta";
+            return new ResponseEntity(result, HttpStatus.OK);
         } catch(UsuarioException e){
             ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND, "/cesta",
                     "El usuario no existe", LocalDate.now());
@@ -58,8 +59,7 @@ public class CestaController {
     public ResponseEntity añadirArticulo(@RequestParam String nombreUsuario, @PathVariable String referencia)
     throws ArticuloException {
         try{
-            boolean añadir = cestaService.añadirArticulo(nombreUsuario, referencia);
-            if(añadir){
+            if(cestaService.añadirArticulo(nombreUsuario, referencia)){
                 return new ResponseEntity("Se ha añadido el artículo a la cesta",HttpStatus.OK);
             } else {
                 return new ResponseEntity("El artículo no tiene stock en estos momentos",HttpStatus.BAD_REQUEST);

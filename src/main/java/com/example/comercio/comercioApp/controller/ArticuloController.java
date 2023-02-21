@@ -39,7 +39,7 @@ public class ArticuloController {
         } catch (ArticuloException e){
             ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND, "/articulos/disponibles",
                     "No hay artículos disponibles", LocalDate.now());
-            return new ResponseEntity<ErrorResponse>(error, HttpStatus.NOT_FOUND);
+            return new ResponseEntity(error, HttpStatus.NOT_FOUND);
         }
     }
 
@@ -57,7 +57,7 @@ public class ArticuloController {
         }catch (ArticuloException e){
             ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND, "/articulos/topVentas",
                     "No hay artículos en el top de ventas", LocalDate.now());
-            return new ResponseEntity<ErrorResponse>(error, HttpStatus.NOT_FOUND);
+            return new ResponseEntity(error, HttpStatus.NOT_FOUND);
         }
     }
 }
